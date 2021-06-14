@@ -1,0 +1,19 @@
+python train.py \
+        --dataroot /hd1/matianxiang/MUST/datasets \
+        --dirSem /hd1/matianxiang/MUST/datasets \
+        --unpairLst /hd1/matianxiang/MUST/datasets/train_images_lst.csv \
+        --name MUST-GAN_origin \
+        --model MUST \
+        --lambda_GAN 5 --lambda_A 1 --lambda_B 1 --lambda_style 150 \
+        --dataset_mode keypoint --n_layers 3 \
+        --norm instance \
+        --batchSize 40 \
+        --gpu_ids 0,1,2,3 \
+        --BP_input_nc 19 --SP_input_nc 8 \
+        --which_model_netG MUST \
+        --which_model_netD resnet \
+        --checkpoints_dir /hd1/matianxiang/MUST/check_points \
+        --L1_type l1_plus_perL1 \
+        --n_layers_D 3 --with_D_PP 1 --with_D_PB 1 --display_id 1 \
+        --display_port 8090 \
+        --save_epoch_freq 1 \
