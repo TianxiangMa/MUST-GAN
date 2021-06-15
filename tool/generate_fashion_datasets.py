@@ -14,11 +14,11 @@ def make_dataset(dir):
 	images = []
 	assert os.path.isdir(dir), '%s is not a valid directory' % dir
 
-	train_root = os.path.join(dir, 'train_highres')
+	train_root = os.path.join(dir, 'train')
 	if not os.path.exists(train_root):
 		os.mkdir(train_root)
 
-	test_root = os.path.join(dir, 'test_highres')
+	test_root = os.path.join(dir, 'test')
 	if not os.path.exists(test_root):
 		os.mkdir(test_root)
 
