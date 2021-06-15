@@ -8,7 +8,7 @@ import torch.nn.functional as F
 import torchvision.models as models
 
 class L1_plus_perceptualLoss(nn.Module):
-    def __init__(self, lambda_L1, lambda_perceptual, perceptual_layers, gpu_ids, percep_is_l1):
+    def __init__(self, dataroot, lambda_L1, lambda_perceptual, perceptual_layers, gpu_ids, percep_is_l1):
         super(L1_plus_perceptualLoss, self).__init__()
 
         self.lambda_L1 = lambda_L1
@@ -19,7 +19,7 @@ class L1_plus_perceptualLoss(nn.Module):
 
         # vgg = models.vgg19(pretrained=True).features
         vgg19 = models.vgg19(pretrained=False)
-        vgg19.load_state_dict(torch.load('/hd1/matianxiang/MUST/datasets/vgg19-dcbb9e9d.pth'))
+        vgg19.load_state_dict(torch.load(os.path.join(dataroot, 'vgg19-dcbb9e9d.pth')))
         vgg = vgg19.features
 
 
