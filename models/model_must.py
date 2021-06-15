@@ -15,11 +15,11 @@ class MUST(nn.Module):
         # appearance encoder
         input_dim = 3
         SP_input_nc = 8
-        self.enc_appearance = AppearanceEncoder(dataroot, 3, input_dim, dim, int(style_dim/SP_input_nc), norm='none', activ=activ, pad_type=pad_type) # layer: ch: 64,128,256,512, size: 1x2 (mean,var)
+        self.enc_appearance = AppearanceEncoder(dataroot, 3, input_dim, dim, int(style_dim/SP_input_nc), norm='none', activ=activ, pad_type=pad_type)
 
         # pose encoder
-        input_dim = 19 # ch: 19->8
-        self.enc_pose = PoseEncoder(3, n_res, input_dim, dim, 'in', activ, pad_type=pad_type, convGroup=1) # ch: 512, size: 32
+        input_dim = 19
+        self.enc_pose = PoseEncoder(3, n_res, input_dim, dim, 'in', activ, pad_type=pad_type, convGroup=1)
         input_dim = 3
         dim = 512
 
@@ -38,7 +38,6 @@ class MUST(nn.Module):
 class AppearanceEncoder(nn.Module):
     def __init__(self, dataroot, n_downsample, input_dim, dim, style_dim, norm, activ, pad_type):
         super(AppearanceEncoder, self).__init__()
-        # self.vgg = models.vgg19(pretrained=True).features
         vgg19 = models.vgg19(pretrained=False)
         vgg19.load_state_dict(torch.load(os.path.join(dataroot, 'vgg19-dcbb9e9d.pth')))
         self.vgg = vgg19.features
@@ -47,16 +46,16 @@ class AppearanceEncoder(nn.Module):
             param.requires_grad_(False)
 
         self.cha_atten1 = ChannelAttention(dim)
-        self.conv1 = Conv2dBlock(dim, dim//8, 5, 1, 2, norm=norm, activation=activ, pad_type=pad_type) # ch: 64->8, size: 256->256
+        self.conv1 = Conv2dBlock(dim, dim//8, 5, 1, 2, norm=norm, activation=activ, pad_type=pad_type)
         dim = dim*2
         self.cha_atten2 = ChannelAttention(dim)
-        self.conv2 = Conv2dBlock(dim, dim//8, 5, 1, 2, norm=norm, activation=activ, pad_type=pad_type) # ch: 128->16, size: 128->128
+        self.conv2 = Conv2dBlock(dim, dim//8, 5, 1, 2, norm=norm, activation=activ, pad_type=pad_type)
         dim = dim*2
         self.cha_atten3 = ChannelAttention(dim)
-        self.conv3 = Conv2dBlock(dim, dim//8, 5, 1, 2, norm=norm, activation=activ, pad_type=pad_type) # ch: 256->32, size: 64->64
+        self.conv3 = Conv2dBlock(dim, dim//8, 5, 1, 2, norm=norm, activation=activ, pad_type=pad_type)
         dim = dim*2
         self.cha_atten4 = ChannelAttention(dim)
-        self.conv4 = Conv2dBlock(dim, dim//8, 5, 1, 2, norm=norm, activation=activ, pad_type=pad_type)  # ch: 512->64, size: 32->32
+        self.conv4 = Conv2dBlock(dim, dim//8, 5, 1, 2, norm=norm, activation=activ, pad_type=pad_type)
         dim = dim*2
 
         self.padding = nn.ReflectionPad2d(50)
@@ -67,7 +66,6 @@ class AppearanceEncoder(nn.Module):
             layers = {'0': 'conv1_1', '5': 'conv2_1', '10': 'conv3_1', '19': 'conv4_1'}
         features = {}
         x = image
-        # model._modules is a dictionary holding each module in the model
         for name, layer in model._modules.items():
             x = layer(x)
             if name in layers:
@@ -89,25 +87,25 @@ class AppearanceEncoder(nn.Module):
         out = {}
 
         sty_fea = self.get_features(x, self.vgg)
-        x = sty_fea['conv1_1'] # 64*256*256
+        x = sty_fea['conv1_1']
         x = self.cha_atten1(x)
         x = self.conv1(x)
-        out['layer4'] = self.get_statistics(x, 'global') # n,c,1,2
+        out['layer4'] = self.get_statistics(x, 'global')
 
-        x = sty_fea['conv2_1'] # 128*128*128
+        x = sty_fea['conv2_1']
         x = self.cha_atten2(x)
         x = self.conv2(x)
-        out['layer3'] = self.get_statistics(x, 'global') # n,c,1,2
+        out['layer3'] = self.get_statistics(x, 'global')
 
-        x = sty_fea['conv3_1'] # 256*64*64
+        x = sty_fea['conv3_1']
         x = self.cha_atten3(x)
         x = self.conv3(x)
-        out['layer2'] = self.get_statistics(x, 'global') # n,c,1,2
+        out['layer2'] = self.get_statistics(x, 'global')
 
-        x = sty_fea['conv4_1'] # 512*32*32
+        x = sty_fea['conv4_1']
         x = self.cha_atten4(x)
         x = self.conv4(x)
-        out['layer1'] = self.get_statistics(x, 'global') # n,c,1,2
+        out['layer1'] = self.get_statistics(x, 'global')
 
         return out
 
@@ -117,7 +115,7 @@ class AppearanceEncoder(nn.Module):
             semi = torch.unsqueeze(semi, 1)
             semi = semi.repeat(1, x.size(1), 1, 1)
             xi = x.mul(semi)
-            xi = F.interpolate(xi, (256,256)) # size: 256,176->256,256
+            xi = F.interpolate(xi, (256,256))
             
             n,c,h,w = xi.size()
             xi = xi.view(n,c,64,32,32)
@@ -167,13 +165,13 @@ class PoseEncoder(nn.Module):
     def __init__(self, n_downsample, n_res, input_dim, dim, norm, activ, pad_type, convGroup=8):
         super(PoseEncoder, self).__init__()
         self.model = []
-        self.model += [Conv2dBlock(input_dim, dim, 7, 1, 3, norm=norm, activation=activ, pad_type=pad_type, convGroup=1)] # ch: 8->64, size: 256->256
+        self.model += [Conv2dBlock(input_dim, dim, 7, 1, 3, norm=norm, activation=activ, pad_type=pad_type, convGroup=1)]
         # downsampling blocks
-        for i in range(n_downsample): # n_downsample=3
-            self.model += [Conv2dBlock(dim, 2 * dim, 4, 2, 1, norm=norm, activation=activ, pad_type=pad_type, convGroup=1)] # ch: 64->128->256->512, size: 256->128->64->32
+        for i in range(n_downsample):
+            self.model += [Conv2dBlock(dim, 2 * dim, 4, 2, 1, norm=norm, activation=activ, pad_type=pad_type, convGroup=1)]
             dim *= 2
-        for i in range(n_downsample-1): # n_downsample=2
-            self.model += [Conv2dBlock(dim, dim, 5, 1, 2, norm=norm, activation=activ, pad_type=pad_type, convGroup=1)] # ch: 512->512->512, size: 32->32->32
+        for i in range(n_downsample-1):
+            self.model += [Conv2dBlock(dim, dim, 5, 1, 2, norm=norm, activation=activ, pad_type=pad_type, convGroup=1)]
 
         self.model = nn.Sequential(*self.model)
         self.output_dim = dim  # output_dim： 512
@@ -189,13 +187,11 @@ class Generator(nn.Module):
         self.model = nn.ModuleList()
         # upsampling blocks
         dim = 512
-        for i in range(n_upsample): # n_upsample: 3, ch: 512->256->128->64, size: 32->64->128->256
+        for i in range(n_upsample):
             self.model += [SMResBlocks(dim, dim // 2, True, norm=norm, activation=activ, pad_type=pad_type, convgroup=convgroup)]
             dim //= 2
-        # ch: 64->64, size: 256->256
         self.model += [SMResBlocks(dim, dim, False, norm=norm, activation=activ, pad_type=pad_type, convgroup=convgroup)]
-
-        self.model += [Conv2dBlock(dim, output_dim, 1, 1, 0, norm='none', activation='tanh', pad_type=pad_type)] # ch: 64->3, size: 256->256
+        self.model += [Conv2dBlock(dim, output_dim, 1, 1, 0, norm='none', activation='tanh', pad_type=pad_type)]
 
     def forward(self, appearance_code, x):
         for i,layer in enumerate(self.model):
@@ -258,35 +254,29 @@ class SMResBlocks(nn.Module):
 class SMResBlock(nn.Module):
     def __init__(self, in_nc, out_nc):
         super(SMResBlock, self).__init__()
-
         self.param_free_norm = nn.InstanceNorm2d(in_nc, affine=False)
         self.statis_affine = MLP(2*in_nc, 2*out_nc, 2*in_nc, 3, norm='none', activ='relu')
         
     def forward(self, x, statistics_code):       
-        normalized = self.param_free_norm(x) # n,c,h,w
-
+        normalized = self.param_free_norm(x)
         n,c,h,w = statistics_code.size()
         statistics_code = statistics_code.view(statistics_code.size(0), -1)
         statistics_code = self.statis_affine(statistics_code)
         statistics_code = statistics_code.view(n,-1,h,w)
-
         gamma = statistics_code[:,:,:,1].unsqueeze(3)
         beta = statistics_code[:,:,:,0].unsqueeze(3)
-
         out = normalized * gamma + beta
-
         return out
 
 
 class MLP(nn.Module):
     def __init__(self, input_dim, output_dim, dim, n_blk, norm='none', activ='relu'):
-
         super(MLP, self).__init__()
         self.model = []
         self.model += [LinearBlock(input_dim, dim, norm=norm, activation=activ)]
         for i in range(n_blk - 2):
             self.model += [LinearBlock(dim, dim, norm=norm, activation=activ)]
-        self.model += [LinearBlock(dim, output_dim, norm='none', activation='none')] # no output activations
+        self.model += [LinearBlock(dim, output_dim, norm='none', activation='none')]
         self.model = nn.Sequential(*self.model)
 
     def forward(self, x):
@@ -313,7 +303,6 @@ class Conv2dBlock(nn.Module):
         if norm == 'bn':
             self.norm = nn.BatchNorm2d(norm_dim)
         elif norm == 'in':
-            #self.norm = nn.InstanceNorm2d(norm_dim, track_running_stats=True)
             if in_norm_learnable == True:
                 self.norm = nn.InstanceNorm2d(norm_dim, affine=True)
             else:
@@ -463,7 +452,6 @@ class SpectralNorm(nn.Module):
             v.data = l2normalize(torch.mv(torch.t(w.view(height,-1).data), u.data))
             u.data = l2normalize(torch.mv(w.view(height,-1).data, v.data))
 
-        # sigma = torch.dot(u.data, torch.mv(w.view(height,-1).data, v.data))
         sigma = u.dot(w.view(height, -1).mv(v))
         setattr(self.module, self.name, w / sigma.expand_as(w))
 
