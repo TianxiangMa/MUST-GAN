@@ -50,6 +50,11 @@ Download [train/test keypoints annotation](https://drive.google.com/drive/folder
 
 Put all the above files into the `./datastes` folder.
 
+- Run the following code to generate pose map and pose connection map.
+```bash
+python tool/generate_pose_map.py
+python tool/generate_pose_connection_map.py
+```
 
 ### Testing
 Download our [pretrained model](https://drive.google.com/drive/folders/1NQM3LxvD0RPgrNdwL474keByKOtPezFh?usp=sharing), and put it into `./check_points/MUST-GAN_origin/` folder.
