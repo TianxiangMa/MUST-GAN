@@ -1,11 +1,12 @@
 from __future__ import absolute_import
-
 import torch
 from torch import nn
 from torch.autograd import Variable
 import numpy as np
 import torch.nn.functional as F
 import torchvision.models as models
+import os
+
 
 class L1_plus_perceptualLoss(nn.Module):
     def __init__(self, dataroot, lambda_L1, lambda_perceptual, perceptual_layers, gpu_ids, percep_is_l1):
