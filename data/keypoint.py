@@ -12,11 +12,11 @@ class KeyDataset(BaseDataset):
         self.opt = opt
         self.root = opt.dataroot
         if opt.phase == 'train':
-            self.dir_P = os.path.join(opt.dataroot, opt.phase + '_highres256')
+            self.dir_P = os.path.join(opt.dataroot, opt.phase)
             self.dir_K = os.path.join(opt.dataroot, opt.phase + 'K')
             self.dir_conn_map = os.path.join(opt.dataroot, 'pose_connect_map')
         elif opt.phase == 'test':
-            self.dir_P = os.path.join(opt.dataroot, opt.phase + '_highres256')
+            self.dir_P = os.path.join(opt.dataroot, opt.phase)
             self.dir_K = os.path.join(opt.dataroot, opt.phase + 'K')
             self.dir_conn_map = os.path.join(opt.dataroot, 'pose_connect_map')
 
