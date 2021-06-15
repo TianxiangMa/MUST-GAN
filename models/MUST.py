@@ -28,7 +28,7 @@ class TransferModel(BaseModel):
         self.input_SP1_set = self.Tensor(nb, opt.SP_input_nc, size, size)
 
         input_nc = [opt.P_input_nc, opt.BP_input_nc+opt.BP_input_nc]
-        self.netG = networks.define_G(input_nc, opt.ngf, opt.which_model_netG, 
+        self.netG = networks.define_G(opt.dataroot, input_nc, opt.ngf, opt.which_model_netG, 
                                         opt.norm, opt.init_type, self.gpu_ids, opt.G_n_downsampling)
 
 
@@ -76,11 +76,11 @@ class TransferModel(BaseModel):
             # define loss functions
             self.criterionGAN = networks.GANLoss(use_lsgan=not opt.no_lsgan, tensor=self.Tensor)
             if opt.use_styleloss:
-                self.styleloss = StyleLoss()
+                self.styleloss = StyleLoss(opt.dataroot)
             if opt.L1_type == 'origin':
                 self.criterionL1 = torch.nn.L1Loss()
             elif opt.L1_type == 'l1_plus_perL1':
-                self.criterionL1 = L1_plus_perceptualLoss(opt.lambda_A, opt.lambda_B, opt.perceptual_layers, self.gpu_ids, opt.percep_is_l1)
+                self.criterionL1 = L1_plus_perceptualLoss(opt.dataroot, opt.lambda_A, opt.lambda_B, opt.perceptual_layers, self.gpu_ids, opt.percep_is_l1)
             else:
                 raise Exception('Unsurportted type of L1!')
 
