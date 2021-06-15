@@ -20,7 +20,7 @@ class KeyDataset(BaseDataset):
             self.dir_K = os.path.join(opt.dataroot, opt.phase + 'K')
             self.dir_conn_map = os.path.join(opt.dataroot, 'pose_connect_map')
 
-        self.dir_SP = opt.dirSem
+        self.dir_SP = opt.dataroot
         self.SP_input_nc = opt.SP_input_nc
 
         if opt.phase == 'train':
