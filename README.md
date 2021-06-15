@@ -57,7 +57,7 @@ python tool/generate_pose_connection_map.py
 ```
 
 ### Testing
-Download our [pretrained model](https://drive.google.com/drive/folders/1NQM3LxvD0RPgrNdwL474keByKOtPezFh?usp=sharing), and put it into `./check_points/MUST-GAN_origin/` folder.
+Download our [pretrained model](https://drive.google.com/drive/folders/1NQM3LxvD0RPgrNdwL474keByKOtPezFh?usp=sharing), and put it into `./check_points/MUST-GAN/` folder.
 
 Run the following code, and set the parameters along your need.
 ```bash
