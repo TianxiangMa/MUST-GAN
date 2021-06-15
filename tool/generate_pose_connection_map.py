@@ -11,7 +11,7 @@ import torch
 import json
 
 
-root_path = '/hd4/matianxiang/test1/datasets/' # Using yourself root
+root_path = '/hd1/matianxiang/MUST/datasets/' # Using yourself root
 save_dir = os.path.join(root_path, 'pose_connection_map/')
 os.makedirs(save_dir, exist_ok=True)
 
