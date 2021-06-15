@@ -122,7 +122,7 @@ def get_scheduler(optimizer, opt):
     return scheduler
 
 
-def define_G(input_nc, ngf, which_model_netG, norm='batch', init_type='normal',
+def define_G(dataroot, input_nc, ngf, which_model_netG, norm='batch', init_type='normal',
              gpu_ids=[], n_downsampling=2):
     netG = None
     use_gpu = len(gpu_ids) > 0
@@ -135,7 +135,7 @@ def define_G(input_nc, ngf, which_model_netG, norm='batch', init_type='normal',
         style_dim = 512
         n_res =8
         mlp_dim = 256
-        netG = MUST(input_nc, ngf, style_dim, n_downsampling, n_res, mlp_dim)
+        netG = MUST(dataroot, input_nc, ngf, style_dim, n_downsampling, n_res, mlp_dim)
     else:
         raise NotImplementedError('Generator model name [%s] is not recognized' % which_model_netG)
     if len(gpu_ids) > 1:
