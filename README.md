@@ -56,6 +56,8 @@ python tool/generate_pose_map.py
 python tool/generate_pose_connection_map.py
 ```
 
+Download [vgg pretrained model](https://drive.google.com/drive/folders/1ZOnHhY-24JrRdk1HMCp3Ho1Ll1Zr0VL4?usp=sharing) for training.
+
 ### Testing
 Download our [pretrained model](https://drive.google.com/drive/folders/1NQM3LxvD0RPgrNdwL474keByKOtPezFh?usp=sharing), and put it into `./check_points/MUST-GAN/` folder.
 
