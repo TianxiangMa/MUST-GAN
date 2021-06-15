@@ -76,14 +76,13 @@ bash scripts/train.sh
 If you use this code for your research, please cite our paper:
 
 ```
-@article{ma2020must,
+@inproceedings{ma2020must,
   title={MUST-GAN: Multi-level Statistics Transfer for Self-driven Person Image Generation},
   author={Ma, Tianxiang and Peng, Bo and Wang, Wei and Dong, Jing},
-  journal={arXiv preprint arXiv:2011.09084},
-  year={2020}
+  booktitle={Computer Vision and Pattern Recognition (CVPR)},
+  year={2021}
 }
 ```
-
 
 ## Acknowledgments
 Our code is based on [PATN](https://github.com/tengteng95/Pose-Transfer) and [ADGAN](https://github.com/menyifang/ADGAN), thanks for their great work.
