@@ -10,16 +10,15 @@ CRIPAC,NLPR,CASIA & University of Chinese Academy of Sciences.
 
 **Pose transfer**
 <p float="center">
-<img src = “images/pose_transfer.png”  width = “50%” align = left><img src = “images/pose_transfer.png”  width = “50%” align = right>
-</p>
-
-<p float="center">
-<img src="images/pose_transfer.png" width="200px"/>
+<img src="images/pose_transfer.png" width="400px"/>
 </p>
 
 **Clothes style transfer**
 <p float="center">
-<img src="images/clothes_style_transfer_1.png" width="200px"/>
+<img src="images/clothes_style_transfer_1.png" width="400px"/>
+</p>
+<p float="center">
+<img src="images/clothes_style_transfer_2.png" width="400px"/>
 </p>
 
 ## Requirement
