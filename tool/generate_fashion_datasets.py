@@ -51,13 +51,13 @@ def make_dataset(dir):
 
                 if path_names in train_images:
                     img = Image.open(path)
-                    img_resize = img.resize([256, 256])
-                    img_resize.save(os.path.join(train_root, path_names))# shutil.copy(path, os.path.join(train_root, path_names))
+                    img_resize = img.resize([256, 256], Image.ANTIALIAS)
+                    img_resize.save(os.path.join(train_root, path_names), 'JPEG', quality = 95)
                     print(os.path.join(train_root, path_names))
                 elif path_names in test_images:
                     img = Image.open(path)
-                    img_resize = img.resize([256, 256])
-                    img_resize.save(os.path.join(test_root, path_names))# shutil.copy(path, os.path.join(test_root, path_names))
+                    img_resize = img.resize([256, 256], Image.ANTIALIAS)
+                    img_resize.save(os.path.join(test_root, path_names), 'JPEG', quality = 95)
                     print(os.path.join(test_root, path_names))
 
 make_dataset('/hd1/matianxiang/MUST/datasets/')# Using yourself root
