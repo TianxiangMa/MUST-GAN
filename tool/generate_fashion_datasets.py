@@ -1,7 +1,6 @@
 import os
 import shutil
-from PIL
-import Image
+from PIL import Image
 
 IMG_EXTENSIONS = [
     '.jpg', '.JPG', '.jpeg', '.JPEG',
