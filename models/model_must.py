@@ -10,12 +10,12 @@ import os
 import torchvision.models.vgg as models
 
 class MUST(nn.Module):
-    def __init__(self, input_dim, dim, style_dim, n_downsample, n_res, mlp_dim, activ='relu', pad_type='reflect'):
+    def __init__(self, dataroot, input_dim, dim, style_dim, n_downsample, n_res, mlp_dim, activ='relu', pad_type='reflect'):
         super(MUST, self).__init__()
         # appearance encoder
         input_dim = 3
         SP_input_nc = 8
-        self.enc_appearance = AppearanceEncoder(3, input_dim, dim, int(style_dim/SP_input_nc), norm='none', activ=activ, pad_type=pad_type) # layer: ch: 64,128,256,512, size: 1x2 (mean,var)
+        self.enc_appearance = AppearanceEncoder(dataroot, 3, input_dim, dim, int(style_dim/SP_input_nc), norm='none', activ=activ, pad_type=pad_type) # layer: ch: 64,128,256,512, size: 1x2 (mean,var)
 
         # pose encoder
         input_dim = 19 # ch: 19->8
@@ -36,11 +36,11 @@ class MUST(nn.Module):
 
 
 class AppearanceEncoder(nn.Module):
-    def __init__(self, n_downsample, input_dim, dim, style_dim, norm, activ, pad_type):
+    def __init__(self, dataroot, n_downsample, input_dim, dim, style_dim, norm, activ, pad_type):
         super(AppearanceEncoder, self).__init__()
         # self.vgg = models.vgg19(pretrained=True).features
         vgg19 = models.vgg19(pretrained=False)
-        vgg19.load_state_dict(torch.load('/hd1/matianxiang/MUST/datasets/vgg19-dcbb9e9d.pth'))
+        vgg19.load_state_dict(torch.load(os.path.join(dataroot, 'vgg19-dcbb9e9d.pth')))
         self.vgg = vgg19.features
 
         for param in self.vgg.parameters():
