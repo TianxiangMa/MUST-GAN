@@ -3,12 +3,13 @@ import torch.nn as nn
 import torchvision.models as models
 import torch.nn.functional as F
 import numpy as np
+import os
 
 class StyleLoss(nn.Module):
 
-    def __init__(self):
+    def __init__(self, dataroot):
         super(StyleLoss, self).__init__()
-        self.add_module('vgg', VGG19())
+        self.add_module('vgg', VGG19(dataroot))
         self.criterion = torch.nn.L1Loss()
 
     def compute_gram(self, x):
@@ -42,11 +43,11 @@ class StyleLoss(nn.Module):
         return style_loss
 
 class VGG19(torch.nn.Module):
-    def __init__(self):
+    def __init__(self, dataroot):
         super(VGG19, self).__init__()
         
         vgg19 = models.vgg19(pretrained=False)
-        vgg19.load_state_dict(torch.load('/hd1/matianxiang/MUST/datasets/vgg19-dcbb9e9d.pth'))
+        vgg19.load_state_dict(torch.load(os.path.join(dataroot, 'vgg19-dcbb9e9d.pth')))
         features = vgg19.features
 
         for param in features.parameters():
