@@ -8,7 +8,8 @@ The Pytorch implementation of our CVPR2021 paper "MUST-GAN: Multi-level Statisti
 
 CRIPAC,NLPR,CASIA & University of Chinese Academy of Sciences.
 
-**Test results of our model under self-supervised training.**
+---
+**Test results of our model under self-supervised training:**
 
 **Pose transfer**
 <p float="center">
