@@ -76,7 +76,7 @@ bash scripts/train.sh
 If you use this code for your research, please cite our paper:
 
 ```
-@inproceedings{ma2020must,
+@inproceedings{ma2021must,
   title={MUST-GAN: Multi-level Statistics Transfer for Self-driven Person Image Generation},
   author={Ma, Tianxiang and Peng, Bo and Wang, Wei and Dong, Jing},
   booktitle={Computer Vision and Pattern Recognition (CVPR)},
