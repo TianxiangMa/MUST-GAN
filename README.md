@@ -9,8 +9,17 @@ The Pytorch implementation of our CVPR2021 paper "MUST-GAN: Multi-level Statisti
 CRIPAC,NLPR,CASIA & University of Chinese Academy of Sciences.
 
 **Pose transfer**
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="images/pose_transfer.png" width="200" height="260" ></div>
+
+
+
 <p float="center">
-<img src="images/pose_transfer.png" width="800px"/>
+<img src="images/pose_transfer.png" width="200px"/>
+</p>
+
+**Clothes style transfer**
+<p float="center">
+<img src="images/clothes_style_transfer_1.png" width="200px"/>
 </p>
 
 ## Requirement
