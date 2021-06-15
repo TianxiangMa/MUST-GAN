@@ -73,13 +73,13 @@ Download [vgg pretrained model](https://drive.google.com/drive/folders/1ZOnHhY-2
 ### Test
 Download our [pretrained model](https://drive.google.com/drive/folders/1NQM3LxvD0RPgrNdwL474keByKOtPezFh?usp=sharing), and put it into `./check_points/MUST-GAN/` folder.
 
-- Run the following code, and set the parameters along your need.
+- Run the following code, and set the parameters as your need.
 ```bash
 bash scripts/test.sh
 ```
 
 ### Train
-- Run the following code, and set the parameters along your need.
+- Run the following code, and set the parameters as your need.
 ```bash
 bash scripts/train.sh
 ```
