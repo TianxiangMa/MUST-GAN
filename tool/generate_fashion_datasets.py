@@ -50,15 +50,15 @@ def make_dataset(dir):
 				path_names = 'fashion' + "".join(path_names)
 
 				if path_names in train_images:
-    				img = Image.open(path)
+    					img = Image.open(path)
 					img_resize = img.resize([256,256])
-					img.save(os.path.join(train_root, path_names))
+					img_resize.save(os.path.join(train_root, path_names))
 					# shutil.copy(path, os.path.join(train_root, path_names))
 					print(os.path.join(train_root, path_names))
 				elif path_names in test_images:
-    				img = Image.open(path)
+    					img = Image.open(path)
 					img_resize = img.resize([256,256])
-					img.save(os.path.join(test_root, path_names))
+					img_resize.save(os.path.join(test_root, path_names))
 					# shutil.copy(path, os.path.join(test_root, path_names))
 					print(os.path.join(test_root, path_names))
 
