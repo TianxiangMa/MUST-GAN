@@ -1,8 +1,7 @@
 python train.py \
         --dataroot /hd1/matianxiang/MUST/datasets \
-        --dirSem /hd1/matianxiang/MUST/datasets \
         --unpairLst /hd1/matianxiang/MUST/datasets/train_images_lst.csv \
-        --name MUST-GAN_origin \
+        --name MUST-GAN \
         --model MUST \
         --lambda_GAN 5 --lambda_A 1 --lambda_B 1 --lambda_style 150 \
         --dataset_mode keypoint --n_layers 3 \
