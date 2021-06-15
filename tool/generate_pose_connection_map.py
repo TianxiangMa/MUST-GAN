@@ -11,7 +11,7 @@ import torch
 import json
 
 
-root_path = '/hd1/matianxiang/MUST/datasets/' # Using yourself root
+root_path = '/hd4/matianxiang/test1/datasets/' # Using yourself root
 save_dir = os.path.join(root_path, 'pose_connection_map/')
 os.makedirs(save_dir, exist_ok=True)
 
@@ -20,6 +20,7 @@ annotation_file_test = pd.read_csv(os.path.join(root_path, 'fashion-resize-annot
 annotation_file = pd.concat([annotation_file_train, annotation_file_test], axis=0)
 
 for i in range(len(annotation_file)):
+    print('processing %d / %d ...' %(i, len(annotation_file)))
     B_row = annotation_file.iloc[i]
     y_cords = json.loads(B_row['keypoints_y'])
     x_cords = json.loads(B_row['keypoints_x'])
