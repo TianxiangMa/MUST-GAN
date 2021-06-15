@@ -15,10 +15,7 @@ CRIPAC,NLPR,CASIA & University of Chinese Academy of Sciences.
 
 **Clothes style transfer**
 <p float="center">
-<img src="images/clothes_style_transfer_1.png" width="400px"/>
-</p>
-<p float="center">
-<img src="images/clothes_style_transfer_2.png" width="400px"/>
+<img src="images/clothes_style_transfer.png" width="400px"/>
 </p>
 
 ## Requirement
