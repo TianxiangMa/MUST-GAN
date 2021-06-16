@@ -30,24 +30,25 @@ class KeyDataset(BaseDataset):
         
         self.transform = get_transform(opt)
 
+        
     def init_categories_train(self, unpairLst):
-        pairs_file_train = pd.read_csv(unpairLst)
-        self.size = len(pairs_file_train)
+        unpairlist = pd.read_csv(unpairLst)
+        self.size = len(unpairlist)
         self.imgs = []
         print('Loading data unpairs ...')
         for i in range(self.size):
-            img = pairs_file_train.iloc[i]['images_name']
+            img = unpairlist.iloc[i]['images_name']
             self.imgs.append(img)
-
         print('Loading data unpairs finished ...')
 
+        
     def init_categories_test(self, pairLst):
-        pairs_file_train = pd.read_csv(pairLst)
-        self.size = len(pairs_file_train)
+        pairlist = pd.read_csv(pairLst)
+        self.size = len(pairlist)
         self.imgs = []
         print('Loading data pairs ...')
         for i in range(self.size):
-            img = [pairs_file_train.iloc[i]['from'], pairs_file_train.iloc[i]['to']]
+            img = [pairlist.iloc[i]['from'], pairlist.iloc[i]['to']]
             self.imgs.append(img)
 
         print('Loading data pairs finished ...')
