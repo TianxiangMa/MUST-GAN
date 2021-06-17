@@ -1,6 +1,6 @@
 # MUST-GAN
 
-### [Code](https://github.com/TianxiangMa/MUST-GAN) | [paper](https://arxiv.org/pdf/2011.09084.pdf)
+### [Code](https://github.com/TianxiangMa/MUST-GAN) | [paper](https://openaccess.thecvf.com/content/CVPR2021/papers/Ma_MUST-GAN_Multi-Level_Statistics_Transfer_for_Self-Driven_Person_Image_Generation_CVPR_2021_paper.pdf)
 
 The Pytorch implementation of our CVPR2021 paper "MUST-GAN: Multi-level Statistics Transfer for Self-driven Person Image Generation".
  
@@ -88,11 +88,13 @@ bash scripts/train.sh
 If you use this code for your research, please cite our paper:
 
 ```
-@inproceedings{ma2021must,
-  title={MUST-GAN: Multi-level Statistics Transfer for Self-driven Person Image Generation},
-  author={Ma, Tianxiang and Peng, Bo and Wang, Wei and Dong, Jing},
-  booktitle={Computer Vision and Pattern Recognition (CVPR)},
-  year={2021}
+@InProceedings{Ma_2021_CVPR,
+    author    = {Ma, Tianxiang and Peng, Bo and Wang, Wei and Dong, Jing},
+    title     = {MUST-GAN: Multi-Level Statistics Transfer for Self-Driven Person Image Generation},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2021},
+    pages     = {13622-13631}
 }
 ```
 
