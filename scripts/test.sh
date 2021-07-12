@@ -9,4 +9,4 @@ python test.py --dataroot /hd1/matianxiang/MUST/datasets \
                 --which_model_netG MUST \
                 --which_epoch 157 \
 
-# Notes: "--gpu_ids" needs multi-gpus(Such as "--gpu_ids 0,1", only '0' wile be used.) even if "batchSize" equals one.
+# Notes: "--gpu_ids" needs multi-gpus(Such as "--gpu_ids 0,1", only '0' will be used.) even if "batchSize" equals one.
