@@ -2,7 +2,7 @@ import os
 import torch
 import torch.nn as nn
 import torchvision.models.vgg as models
-
+from collections import OrderedDict
 
 class BaseModel(nn.Module):
 
@@ -63,8 +63,17 @@ class BaseModel(nn.Module):
         for key, value in model_dict_clone.items():
             if key.endswith(('running_mean', 'running_var')):
                 del model_dict[key]
+        
+        new_model_dict = OrderedDict()
+        for k, v in model_dict.items():
+            if k.startswith('module.'):
+                new_k = k[7:]
+                new_model_dict[new_k] = v
+            else:
+                new_k = k
+                new_model_dict[new_k] = v
 
-        network.load_state_dict(model_dict, False)
+        network.load_state_dict(new_model_dict, False)
 
 
     def load_VGG(self, network):
