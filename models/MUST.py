@@ -62,11 +62,7 @@ class TransferModel(BaseModel):
             which_epoch = opt.which_epoch
             self.load_network(self.netG, 'netG', which_epoch)
             self.netG.apply(self._fix_bn)
-            if self.isTrain:
-                if opt.with_D_PB:
-                    self.load_network(self.netD_PB, 'netD_PB', which_epoch)
-                if opt.with_D_PP:
-                    self.load_network(self.netD_PP, 'netD_PP', which_epoch)
+            
 
         if self.isTrain:
             self.old_lr = opt.lr
